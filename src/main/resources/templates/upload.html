@@ -1,11 +1,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous"/> 
+	<script type="text/javascript" src="js/custom.js"></script>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-	<div th:if="${message}">
-		<h2 th:text="${message}"/>
-	</div>
+<!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="upload">Submit</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Vote</a>
+    </li>    
+     <li class="nav-item">
+        <span id="user" class="navbar-text"> </span>
+    </li>
+  </ul>
 
-	<div>
+  <!-- Navbar text-->
+
+
+</nav>
+<div class="container">
+ 
+	 <h1>Scavenger Item list</h1>
+  
+    <table class="table table-striped" >
+      <tr>
+        <th>Item</th>
+        <th>Points</th>
+        <th>Submission</th>
+      </tr>
+      <tr th:each="item : ${items}">
+        <td th:text="${item.getKey()}">Onions</td>
+        <td th:text="${item.getValue().points}">Onions</td>
+        <td> <img style="width:250px; height:250px;" th:if="${item.getValue().files}" th:src="'files/'+${item.getValue().getFiles().getPath()}"/>
+        <p th:unless="${item.getValue().files}" th:text="Submit"/>
+        		<div>
 		<form method="POST" enctype="multipart/form-data" action="/">
 			<table>
 				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
@@ -13,29 +49,10 @@
 			</table>
 		</form>
 	</div>
-
-	<div>
-		<ul>
-			<li th:each="file : ${files}">
-				<a th:href="${file}" th:text="${file}" />
-			</li>
-		</ul>
-	</div>
-	
-	 <h1>Product list</h1>
-  
-    <table>
-      <tr>
-        <th>Item</th>
-        <th>Submission</th>
-        <th>Approved</th>
-      </tr>
-      <tr th:each="item : ${items}">
-        <td th:text="${item.name}">Onions</td>
-        <td th:text="${item.submission[$team]}">2.41</td>
-        <td th:text="${item.submission[$team].approved}? #{true} : #{false}">yes</td>
+        </td>
       </tr>
     </table>
+</div>
 
 </body>
 </html>

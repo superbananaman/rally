@@ -44,8 +44,9 @@ public class FileLoader {
 		for (Path item : list) {
 			String[] itemSplit = item.toAbsolutePath().toString().split("/");
 			int len = itemSplit.length;
-			teams.getTeam(itemSplit[len - 2]).getItems().getItems().get(itemSplit[len - 1])
-					.addSubmission(new Submission(item.toAbsolutePath().toString()));
+			String file = itemSplit[len - 1].substring(0,itemSplit[len-1].indexOf("."));
+			teams.getTeam(itemSplit[len - 2]).getItems().getItems().get(file)
+					.addSubmission(new Submission(item.toString()));
 		}
 		System.out.println("Done load");
 	}

@@ -41,15 +41,18 @@ public class FileUploadController {
 
     @GetMapping("/upload")
     public String listUploadedFiles(Model model) throws IOException {
-    	model.addAttribute("Items",teams.getTeam(teamNames.split(",")[0]).getItems().getItems().entrySet());
+    	model.addAttribute("items",teams.getTeam(teamNames.split(",")[0]).getItems().getItems().entrySet());
+    	model.addAttribute("teamNames",teamNames.split(","));
+    	model.addAttribute("Teams",teams);
+    	model.addAttribute("message", "messagetest");
         return "upload";
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/files/{team}/{file}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveFile(@PathVariable("team") String team, @PathVariable("file") String filename ) {
 
-        Resource file = storageService.loadAsResource(filename);
+        Resource file = storageService.loadAsResource(team+"/"+filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
