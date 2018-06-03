@@ -48,7 +48,6 @@ public class FileLoader {
 			teams.getTeam(itemSplit[len - 2]).getItems().getItems().get(file)
 					.addSubmission(new Submission(item.toString()));
 		}
-		System.out.println("Done load");
 	}
 
 	private void loadItemsList() {

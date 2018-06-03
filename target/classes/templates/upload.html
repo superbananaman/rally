@@ -41,8 +41,9 @@
         <td th:text="${item.getValue().points}">Onions</td>
         <td> <img style="width:250px; height:250px;" th:if="${item.getValue().files}" th:src="'files/'+${item.getValue().getFiles().getPath()}"/>
         <p th:unless="${item.getValue().files}" th:text="Submit"/>
-        		<div>
-		<form method="POST" enctype="multipart/form-data" action="/">
+     <div>
+		<form method="POST" enctype="multipart/form-data" action="/store">
+		<input type="hidden" name="item" th:value="${item.getKey()}" />
 			<table>
 				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
 				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
