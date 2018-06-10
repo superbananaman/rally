@@ -18,6 +18,6 @@ public interface StorageService {
 
     void deleteAll();
 
-	void store(MultipartFile file, String filename);
+	void store(MultipartFile file, String filename, String team, String item);
 
 }

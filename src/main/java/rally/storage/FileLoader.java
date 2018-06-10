@@ -42,21 +42,31 @@ public class FileLoader {
 		List<Path> list = storageService.loadAll().collect(Collectors.toList());
 
 		for (Path item : list) {
+			if(item.toAbsolutePath().toString().contains(".DS_Store")) {
+				continue;
+			}
 			String[] itemSplit = item.toAbsolutePath().toString().split("/");
 			int len = itemSplit.length;
 			String file = itemSplit[len - 1].substring(0,itemSplit[len-1].indexOf("."));
-			teams.getTeam(itemSplit[len - 2]).getItems().getItems().get(file)
+			Team team = teams.getTeam(itemSplit[len-2]);
+			team.getItems().getItems().get(file)
 					.addSubmission(new Submission(item.toString()));
 		}
 	}
 
-	private void loadItemsList() {
-		HashMap<String, Item> initItems = new HashMap();
-		for (Entry<String, Integer> entry : itemValues.entrySet()) {
-			initItems.put(entry.getKey(), new Item(entry.getKey(), entry.getValue(), null));
-		}
+	public void loadItemsList() {		
 		for (Entry<String, Team> team : teams.getTeams().entrySet()) {
-			team.getValue().setItems(new Items(initItems));
+			
+			HashMap<String, Item> initItems = new HashMap();
+			for (Entry<String, Integer> entry : itemValues.entrySet()) {
+				initItems.put(entry.getKey(), new Item(entry.getKey(), entry.getValue(), null));
+			}
+			
+			HashMap<String, Item> items = new HashMap<String,Item>();
+			for (Entry<String, Item> entry : initItems.entrySet()) {
+				items.put(entry.getKey(), entry.getValue());
+			}
+			team.getValue().setItems(new Items(items));
 		}
 	}
 }

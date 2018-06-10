@@ -1,6 +1,9 @@
 package rally;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +21,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import rally.storage.FileLoader;
 import rally.storage.StorageFileNotFoundException;
 import rally.storage.StorageService;
 
@@ -33,22 +40,33 @@ public class FileUploadController {
    
     @Value("${teams}")
     private String teamNames;
-    
+    private FileLoader fileLoader;
     private Teams teams;
 
     @Autowired
-    public FileUploadController(StorageService storageService, Teams teams) {
+    public FileUploadController(StorageService storageService, Teams teams, FileLoader fileLoader) {
         this.storageService = storageService;
         this.teams = teams;
+        this.fileLoader = fileLoader;
     }
 
     @GetMapping("/upload")
-    public String listUploadedFiles(Model model) throws IOException {
-    	model.addAttribute("items",teams.getTeam(teamNames.split(",")[0]).getItems().getItems().entrySet());
+    public String listUploadedFiles(Model model, @CookieValue("team") String team) throws IOException {
+    	model.addAttribute("items",teams.getTeam(team.toLowerCase()).getItems().getItems().entrySet());
     	model.addAttribute("teamNames",teamNames.split(","));
     	model.addAttribute("Teams",teams);
-    	model.addAttribute("message", "messagetest");
         return "upload";
+    }
+    
+    @GetMapping("/viewall")
+    public String viewAll(Model model) throws IOException {
+    	Map<Team,Items> itemMap = new HashMap<>();
+    	for(Entry<String, Team> entry : teams.getTeams().entrySet()) {
+    		itemMap.put(entry.getValue(), entry.getValue().getItems());
+    	}
+    	model.addAttribute("teams", itemMap);
+        return "viewall";
+        
     }
 
     @GetMapping("/files/{team}/{file}")
@@ -60,15 +78,11 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/store")
-    public String handleFileUpload(@CookieValue("team") String team, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("item") String itemName,
+    @PostMapping(path="/store", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public void handleFileUpload(@CookieValue("team") String team, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestHeader("item") String itemName,
             RedirectAttributes redirectAttributes, HttpServletRequest request) {
-    	request.getCookies();
-        storageService.store(file, team+"/"+itemName);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/";
+        storageService.store(file, team+"/"+itemName,team,itemName);
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

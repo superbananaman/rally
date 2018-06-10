@@ -1,91 +1,96 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-	<link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous"/>
-	<link href="css/custom.css" rel="stylesheet">
-	<script type="text/javascript" src="js/custom.js"></script>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  
+  <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous" />
+  <link href="css/custom.css" rel="stylesheet">
+  <script type="text/javascript" src="js/custom.js"></script>
+  <title>Car Rally 2018</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 </head>
-<body class="text-center">
 
-<!- HEADER ->
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">Car Rally 2018</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="/upload">Photo and Video Submission</a>
-            <a class="nav-link" href="#">View Submissions</a>
-          </nav>
+<body class="text-center" onLoad="checkUser()">
+
+  <!- HEADER ->
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Car Rally 2018</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="/">Home</a>
+          <a class="nav-link" href="/upload">Photo and Video Submission</a>
+          <a class="nav-link" href="/viewall">View Submissions</a>
+        </nav>
+      </div>
+    </header>
+    <!- END HEADER ->
+
+    <!- START MAIN ->
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">July 1st 2018 Car Rally!</h1>
+      <p class="lead">Submit your teams photos and videos here to be scored and displayed later.</p>
+      <div>
+        <p id="mainContent"></p>
+        <button id="loginBtn" type="button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#myModal">
+          Login to continue
+        </button>
         </div>
-      </header>
-<!- END HEADER ->
+    </main>
+    <!- END MAIN ->
 
-<!- START MAIN ->
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">July 1st 2018 Car Rally!</h1>
-        <p class="lead">Submit your teams photos and videos here to be scored and displayed later.</p>
-        <p class="lead">
-          <button type="button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#myModal">
- 			 Login to continue
-		  </button>
-        </p>
-      </main>
-<!- END MAIN ->
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p> Created by Liam Parker, text issues to (613) 407-5040 </p>
+      </div>
+    </footer>
+  </div>
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-		<p> Created by Liam Parker, text issues to (613) 407-5040 </p>
+  </div>
+
+  <!-- Login Modal -->
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Log in</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-      </footer>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div style="width: 80%; margin: auto">
+            <p>Set your name and team to continue</p>
+            <form action="/">
+              <div class="form-group">
+                <label for="Name">Your Name</label>
+                <input class="form-control" id="name" aria-describedby="emailHelp" placeholder="First name">
+              </div>
+              <div class="form-group">
+                <label form="exampleFormControlSelect1">Your team</label>
+                <select class="form-control" id="team">
+                  <option>Team 1</option>
+                  <option>Team 2</option>
+                  <option>Team 3</option>
+                  <option>Team 4</option>
+                  <option>Team 5</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" onclick="saveDetails()">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
-</div>
-
-<!-- Login Modal -->
-
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Log in</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-       <div style="width: 80%; margin: auto">
-    <p>Set your name and team to continue</p>
- <form action="/">
-  <div class="form-group">
-    <label for="Name">Your Name</label>
-    <input class="form-control" id="name" aria-describedby="emailHelp" placeholder="First name">
-  </div>
-  <div class="form-group">
-    <label form="exampleFormControlSelect1">Your team</label>
-    <select class="form-control" id="team">
-      <option>Team 1</option>
-      <option>Team 2</option>
-      <option>Team 3</option>
-      <option>Team 4</option>
-      <option>Team 5</option>
-    </select>
-  </div>
-  <button type="submit" class="btn btn-primary" onclick="saveDetails()">Submit</button>
-</form>
-</div>
-      </div>
-    </div>
-  </div>
-
-<script src="js/jquery-3.3.1.min.js"</script>
-    <script src="js/popper.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js" </script>
+      < script src = "js/popper.min.js" >
+    </script>
     <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>

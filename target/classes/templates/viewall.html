@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/swiper.min.css" crossorigin="anonymous" />
+  <link href="css/custom.css" rel="stylesheet">
+  <script type="text/javascript" src="js/swiper.min.js"></script>
+  <script type="text/javascript" src="js/swiper.custom.js"></script>
+  <title>Car Rally 2018: View All Submissions</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body class="text-center">
+
+  <!- HEADER ->
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">Car Rally 2018</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/upload">Photo and Video Submission</a>
+          <a class="nav-link active" href="/viewall">View Submissions</a>
+        </nav>
+      </div>
+    </header>
+    <!- END HEADER ->
+
+    <!- START MAIN ->
+    <main role="main" class="inner cover">
+
+      <div class="teamSliders" th:each="team : ${teams}">
+
+        <!-- Slider main container -->
+        <div class="swiper-container">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slidesshows -->
+            <div th:each="item : ${team.getValue().getItems()}">
+              <div class="swiper-slide" th:if="${item.getValue().files}">
+                <img class="img-fluid" th:if="${item.getValue().getFiles().isImage()}" th:src="'files/'+${item.getValue().getFiles().getPath()}"/>
+                <video controls class="img-fluid" th:if="!${item.getValue().getFiles().isImage()}">
+                  <source th:src="'files/'+${item.getValue().getFiles().getPath()}" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+              <!-- If we need pagination -->
+              <div class="swiper-pagination"></div>
+
+              <!-- If we need navigation buttons -->
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+
+            </div>
+          </div>
+    </main>
+    <!- END MAIN ->
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p> Created by Liam Parker, text issues to (613) 407-5040 </p>
+      </div>
+    </footer>
+    </div>
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
+</body>
+
+</html>

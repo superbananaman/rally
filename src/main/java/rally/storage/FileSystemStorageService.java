@@ -17,18 +17,23 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import rally.Submission;
+import rally.Teams;
+
 @Service
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private Teams teams;
 
     @Autowired
-    public FileSystemStorageService(StorageProperties properties) {
+    public FileSystemStorageService(StorageProperties properties, Teams teams) {
         this.rootLocation = Paths.get(properties.getLocation());
+        this.teams = teams;
     }
 
     @Override
-    public void store(MultipartFile file, String filename) {
+    public void store(MultipartFile file, String filename, String team, String item) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + filename);
@@ -45,6 +50,11 @@ public class FileSystemStorageService implements StorageService {
             	suffix = "."+suffix;
                 Files.copy(inputStream, this.rootLocation.resolve(filename+suffix),
                     StandardCopyOption.REPLACE_EXISTING);
+                Submission newSubmission = new Submission(filename.toLowerCase()+suffix);
+                if(file.getContentType().contains("mp4")) {
+                	newSubmission.setImage(false);
+                }
+                teams.getTeam(team.toLowerCase()).getItems().getItems().get(item).setFiles(newSubmission);
             }
         }
         catch (IOException e) {

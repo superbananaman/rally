@@ -3,9 +3,10 @@ package rally;
 public class Submission {
 	private String path;
 	private String approved;
+	private boolean isImage = true;
 
-	public Submission(String item) {
-		this.path = item;
+	public Submission(String path) {
+		this.path = path;
 	}
 
 	public String getPath() {
@@ -23,5 +24,14 @@ public class Submission {
 	public void setApproved(String approved) {
 		this.approved = approved;
 	}
+
+	public boolean isImage() {
+		return isImage;
+	}
+
+	public void setImage(boolean isImage) {
+		this.isImage = isImage;
+	}
+
 
 }
