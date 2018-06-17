@@ -1,5 +1,6 @@
 package rally.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -48,13 +49,14 @@ public class FileSystemStorageService implements StorageService {
             	file.getContentType();
             	String suffix = file.getContentType().substring(file.getContentType().indexOf('/')+1,file.getContentType().length());
             	suffix = "."+suffix;
+            	Files.createDirectories(this.rootLocation.resolve(filename+suffix)).getParent();
                 Files.copy(inputStream, this.rootLocation.resolve(filename+suffix),
                     StandardCopyOption.REPLACE_EXISTING);
                 Submission newSubmission = new Submission(filename.toLowerCase()+suffix);
                 if(file.getContentType().contains("mp4")) {
                 	newSubmission.setImage(false);
                 }
-                teams.getTeam(team.toLowerCase()).getItems().getItems().get(item).setFiles(newSubmission);
+                teams.getTeam(team).getItems().getItems().get(item).setFiles(newSubmission);
             }
         }
         catch (IOException e) {

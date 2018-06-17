@@ -2,8 +2,8 @@
 function saveDetails() {
 	var username = document.getElementById('name').value;
 	var teamname = document.getElementById('team').value;
-	document.cookie = "name=" + username.replace(/ /g, '');
-	document.cookie = "team=" + teamname.replace(/ /g, '');
+	document.cookie = "name=" + encodeURI(username);
+	document.cookie = "team=" + encodeURI(teamname);
 }
 
 window.getCookie = function (name) {

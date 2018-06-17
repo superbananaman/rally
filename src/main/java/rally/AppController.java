@@ -1,6 +1,7 @@
 package rally;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -57,11 +58,20 @@ public class AppController {
     }
 
     @GetMapping("/upload")
-    public String listUploadedFiles(Model model, @CookieValue("team") String team) throws IOException {
-    	model.addAttribute("items",teams.getTeam(team.toLowerCase()).getItems().getItems().entrySet());
+    public String listUploadedFiles(Model model, @CookieValue("team") String cookieTeam) throws IOException {
+    	String team =  java.net.URLDecoder.decode(cookieTeam, "UTF-8");
+    	model.addAttribute("items",teams.getTeam(team).getItems().getItems().entrySet());
     	model.addAttribute("teamNames",teamNames.split(","));
     	model.addAttribute("Teams",teams);
         return "upload";
+    }
+    
+    @GetMapping("/master")
+    public String master(Model model) throws IOException {
+    	model.addAttribute("items",teams.getTeams().get(teamNames.split(",")[0]).getItems().getItems().entrySet());
+    	model.addAttribute("teamNames",teamNames.split(","));
+    	model.addAttribute("teams",teams.getTeams());
+        return "master";
     }
     
     @GetMapping("/viewall")
@@ -86,8 +96,9 @@ public class AppController {
 
     @PostMapping(path="/store", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void handleFileUpload(@CookieValue("team") String team, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestHeader("item") String itemName,
-            RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public void handleFileUpload(@CookieValue("team") String cookieTeam, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestHeader("item") String itemName,
+            RedirectAttributes redirectAttributes, HttpServletRequest request) throws UnsupportedEncodingException {
+    	String team =  java.net.URLDecoder.decode(cookieTeam, "UTF-8");
         storageService.store(file, team+"/"+itemName,team,itemName);
     }
 
