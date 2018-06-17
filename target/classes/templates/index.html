@@ -4,7 +4,7 @@
 <head>
   <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous" />
   <link href="css/custom.css" rel="stylesheet">
-  <script type="text/javascript" src="js/custom.js"></script>
+  <script type="text/javascript" src="js/cookies.js"></script>
   <title>Car Rally 2018</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,8 +20,8 @@
         <h3 class="masthead-brand">Car Rally 2018</h3>
         <nav class="nav nav-masthead justify-content-center">
           <a class="nav-link active" href="/">Home</a>
-          <a class="nav-link" href="/upload">Photo and Video Submission</a>
-          <a class="nav-link" href="/viewall">View Submissions</a>
+          <a id="uploadNav" class="nav-link" href="/upload">Photo and Video Submission</a>
+          <a id="viewAllNav" class="nav-link" href="/viewall">View Submissions</a>
         </nav>
       </div>
     </header>
@@ -32,10 +32,10 @@
       <h1 class="cover-heading">July 1st 2018 Car Rally!</h1>
       <p class="lead">Submit your teams photos and videos here to be scored and displayed later.</p>
       <div>
-        <p id="mainContent"></p>
         <button id="loginBtn" type="button" class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#myModal">
           Login to continue
         </button>
+        <button type="submit" id="logout" class="btn btn-lg btn-secondary" hidden="hidden" onclick="deleteAllCookies()">Logout</button>
         </div>
     </main>
     <!- END MAIN ->
@@ -73,11 +73,7 @@
               <div class="form-group">
                 <label form="exampleFormControlSelect1">Your team</label>
                 <select class="form-control" id="team">
-                  <option>Team 1</option>
-                  <option>Team 2</option>
-                  <option>Team 3</option>
-                  <option>Team 4</option>
-                  <option>Team 5</option>
+                  <option th:each="team : ${teams.getTeams()}" th:text="${team.getKey()}">Team 1</option>
                 </select>
               </div>
               <button type="submit" class="btn btn-primary" onclick="saveDetails()">Submit</button>

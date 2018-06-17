@@ -7,6 +7,8 @@
   <link href="css/custom.css" rel="stylesheet">
   <script type="text/javascript" src="js/swiper.min.js"></script>
   <script type="text/javascript" src="js/swiper.custom.js"></script>
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/custom.js"></script>
   <title>Car Rally 2018: View All Submissions</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,15 +34,14 @@
     <!- START MAIN ->
     <main role="main" class="inner cover">
 
-      <div class="teamSliders" th:each="team : ${teams}">
-
+      <div class="swiper-container" th:each="team : ${teams}">
+      <h1 class="display-3" th:text="${team.getKey().getName()}"> </h1>
         <!-- Slider main container -->
-        <div class="swiper-container">
           <!-- Additional required wrapper -->
           <div class="swiper-wrapper">
             <!-- Slidesshows -->
-            <div th:each="item : ${team.getValue().getItems()}">
-              <div class="swiper-slide" th:if="${item.getValue().files}">
+            <div class="swiper-slide" th:each="item : ${team.getValue().getItems()}">
+              <div th:if="${item.getValue().files}">
                 <img class="img-fluid" th:if="${item.getValue().getFiles().isImage()}" th:src="'files/'+${item.getValue().getFiles().getPath()}"/>
                 <video controls class="img-fluid" th:if="!${item.getValue().getFiles().isImage()}">
                   <source th:src="'files/'+${item.getValue().getFiles().getPath()}" type="video/mp4" />
@@ -54,8 +55,8 @@
               <div class="swiper-button-prev"></div>
               <div class="swiper-button-next"></div>
 
-            </div>
           </div>
+       </div>
     </main>
     <!- END MAIN ->
 
@@ -64,16 +65,7 @@
         <p> Created by Liam Parker, text issues to (613) 407-5040 </p>
       </div>
     </footer>
-    </div>
-  <!-- Initialize Swiper -->
-  <script>
-    var swiper = new Swiper('.swiper-container', {
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-  </script>
+   
 </body>
 
 </html>

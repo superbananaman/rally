@@ -1,30 +1,4 @@
-function saveDetails() {
-	var username = document.getElementById('name').value;
-	var teamname = document.getElementById('team').value;
-	document.cookie = "name=" + username.replace(/ /g, '');
-	document.cookie = "team=" + teamname.replace(/ /g, '');
-}
-
-window.getCookie = function (name) {
-	var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-	if (match) return match[2];
-}
-
-function cookieSaved() {
-	var regexp = new RegExp("(?:^" + "name" + "|;\s*" + "name" + ")=(.*?)(?:;|$)", "g");
-	var result = regexp.exec(document.cookie);
-	return (result === null) ? false : true;
-}
-
-function checkUser() {
-	if (cookieSaved()) {
-		document.getElementById('loginBtn').hidden = true;
-		document.getElementById('mainContent').innerHtml = "Welcome, " + window.getCookie('name');
-	} else {
-		var a = document.getElementById('loginBtn').hidden = false;
-		document.getElementById('mainContent').innerHtml = "";
-	}
-}
+var swiper = [];
 $(document).ready(function () {
 	$(document).on('submit', '#uploadForm', function () {
 		var file = this.file.files[0];
@@ -45,5 +19,20 @@ $(document).ready(function () {
 		window.location.href = 'http://'+ window.location.host + '/upload';
 		return false;
 	});
+	
+$(".swiper-container").each(function(index, element){
+    var $this = $(this);
+    $this.addClass("instance-" + index);
+    $this.find(".swiper-button-prev").addClass("btn-prev-" + index);
+    $this.find(".swiper-button-next").addClass("btn-next-" + index);
+    var swiper = new Swiper(".instance-" + index, {
+    	loop: true,
+    	zoom: true,
+    	zoomToggle: true,
+    	spaceBetween: 5,
+        nextButton: ".btn-next-" + index,
+        prevButton: ".btn-prev-" + index
+    });
+});
 	
 });

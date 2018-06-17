@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import rally.FileUploadController;
+import rally.AppController;
 import rally.Item;
 import rally.Items;
 import rally.Submission;
@@ -49,8 +49,12 @@ public class FileLoader {
 			int len = itemSplit.length;
 			String file = itemSplit[len - 1].substring(0,itemSplit[len-1].indexOf("."));
 			Team team = teams.getTeam(itemSplit[len-2]);
+			Submission sub = new Submission(item.toString());
+			boolean isImage = item.getFileName().toString().contains(".mp4")?false : true;
+			sub.setImage(isImage);
 			team.getItems().getItems().get(file)
-					.addSubmission(new Submission(item.toString()));
+					.addSubmission(sub);
+		
 		}
 	}
 
