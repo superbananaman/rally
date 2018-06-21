@@ -44,6 +44,8 @@ public class AppController {
     private FileLoader fileLoader;
     private Teams teams;
 
+	private boolean storeAllowed;
+
     @Autowired
     public AppController(StorageService storageService, Teams teams, FileLoader fileLoader) {
         this.storageService = storageService;
@@ -93,13 +95,21 @@ public class AppController {
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
+    @GetMapping("/storeAllowed/{bool}")
+    @ResponseBody
+    public void toggleStoreAllowed(@PathVariable("bool") boolean storeBool ) {
+    	this.storeAllowed =  storeBool;
+    	System.out.println("storeAllowed now "+ storeBool);
+    }
 
     @PostMapping(path="/store", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public void handleFileUpload(@CookieValue("team") String cookieTeam, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestHeader("item") String itemName,
             RedirectAttributes redirectAttributes, HttpServletRequest request) throws UnsupportedEncodingException {
     	String team =  java.net.URLDecoder.decode(cookieTeam, "UTF-8");
-        storageService.store(file, team+"/"+itemName,team,itemName);
+    	if(storeAllowed) {
+    		storageService.store(file, team+"/"+itemName,team,itemName);
+    	}
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
