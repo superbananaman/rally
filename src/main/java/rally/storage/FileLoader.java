@@ -1,5 +1,8 @@
 package rally.storage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +26,6 @@ import rally.Teams;
 public class FileLoader {
 
 	private Teams teams;
-
-	@Value("#{${items}}")
-	private Map<String, Integer> itemValues;
 
 	private final StorageService storageService;
 
@@ -62,9 +62,17 @@ public class FileLoader {
 		for (Entry<String, Team> team : teams.getTeams().entrySet()) {
 			
 			HashMap<String, Item> initItems = new HashMap();
-			for (Entry<String, Integer> entry : itemValues.entrySet()) {
-				initItems.put(entry.getKey(), new Item(entry.getKey(), entry.getValue(), null));
-			}
+	        try (BufferedReader br = new BufferedReader(new FileReader("itemList.csv"))) {
+	        	String line;
+	            while ((line = br.readLine()) != null) {
+	                String[] item = line.split(",");
+					initItems.put(item[0], new Item(item[0], item[1],Integer.parseInt(item[2]), null));
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+			
 			
 			HashMap<String, Item> items = new HashMap<String,Item>();
 			for (Entry<String, Item> entry : initItems.entrySet()) {

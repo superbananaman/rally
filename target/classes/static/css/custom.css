@@ -23,12 +23,13 @@ a:hover {
 /*
  * Base structure
  */
+body.modal-open { position: fixed; }
 
 html,
 body {
 background-color: #000;
   height: 100%;
-  background: url(../img/mapleleaf.svg) center center fixed; 
+  background: url(../img/mapleleaf.svg) center center; 
 	background-size: contain; 
 }
 

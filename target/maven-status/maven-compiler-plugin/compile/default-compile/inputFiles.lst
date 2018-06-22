@@ -1,2 +1,16 @@
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Main.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Submission.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Team.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Teams.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/StorageService.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/StorageException.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/StorageProperties.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Item.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Category.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Items.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/StorageFileNotFoundException.java
 /Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Photo.java
-/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/Controller.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/FileLoader.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/rallyProperties.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/AppController.java
+/Users/juliacruse/eclipse-workspace/rally/src/main/java/rally/storage/FileSystemStorageService.java

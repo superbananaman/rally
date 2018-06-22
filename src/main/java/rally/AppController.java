@@ -44,7 +44,7 @@ public class AppController {
     private FileLoader fileLoader;
     private Teams teams;
 
-	private boolean storeAllowed;
+	private boolean storeAllowed = true;
 
     @Autowired
     public AppController(StorageService storageService, Teams teams, FileLoader fileLoader) {

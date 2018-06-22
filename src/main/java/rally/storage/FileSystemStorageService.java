@@ -49,7 +49,7 @@ public class FileSystemStorageService implements StorageService {
             	file.getContentType();
             	String suffix = file.getContentType().substring(file.getContentType().indexOf('/')+1,file.getContentType().length());
             	suffix = "."+suffix;
-            	Files.createDirectories(this.rootLocation.resolve(filename+suffix)).getParent();
+            	Files.createDirectories(this.rootLocation.resolve(filename+suffix).getParent());
                 Files.copy(inputStream, this.rootLocation.resolve(filename+suffix),
                     StandardCopyOption.REPLACE_EXISTING);
                 Submission newSubmission = new Submission(filename.toLowerCase()+suffix);
