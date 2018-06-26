@@ -64,7 +64,7 @@ public class FileLoader {
 			HashMap<String, Item> initItems = new HashMap();
 	        try (BufferedReader br = new BufferedReader(new FileReader("itemList.csv"))) {
 	        	String line;
-	            while ((line = br.readLine()) != null) {
+	            while ((line = br.readLine().toLowerCase()) != null) {
 	                String[] item = line.split(",");
 					initItems.put(item[0], new Item(item[0], item[1],Integer.parseInt(item[2]), null));
 	            }
