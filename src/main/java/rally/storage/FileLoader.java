@@ -1,6 +1,7 @@
 package rally.storage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,8 @@ public class FileLoader {
 			if(item.toAbsolutePath().toString().contains(".DS_Store")) {
 				continue;
 			}
-			String[] itemSplit = item.toAbsolutePath().toString().split("/");
+			String pattern = Pattern.quote(System.getProperty("file.separator"));
+			String[] itemSplit = item.toAbsolutePath().toString().split(pattern);
 			int len = itemSplit.length;
 			String file = itemSplit[len - 1].substring(0,itemSplit[len-1].indexOf("."));
 			Team team = teams.getTeam(itemSplit[len-2]);

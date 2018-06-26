@@ -20,6 +20,15 @@ $(document).ready(function () {
 		return false;
 	});
 	
+$(".swiper-slide").each(function(index, element){
+	if(element.children.length == 0){
+		console.log("rmvd");
+		element.parentElement.removeChild(element);
+	}
+	
+});
+
+	
 $(".swiper-container").each(function(index, element){
     var $this = $(this);
     $this.addClass("instance-" + index);
