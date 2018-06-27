@@ -1,6 +1,7 @@
 package rally;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 public class Team {
 
@@ -26,6 +27,17 @@ public class Team {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getCurrentScore() {
+		int score = 0;
+		for(Entry<String,Item> entry : items.getItems().entrySet()) {
+			if(entry.getValue().getFiles()  != null) {
+			score += entry.getValue().getPoints();
+			}
+		}
+		System.out.println(score);
+		return score;
 	}
 
 }

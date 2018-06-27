@@ -77,7 +77,7 @@
 		</tr>
 		<tr th:each="team : ${teams}">
 			<td><p th:text="${team.getKey()}">TEST</p></td>
-			<td>55</td>
+			<td><p th:text="${team.getValue().getCurrentScore()}"</td>
 		</tr>
 		
 		</table>

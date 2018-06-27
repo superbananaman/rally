@@ -63,12 +63,11 @@ public class FileLoader {
 
 	public void loadItemsList() {		
 		for (Entry<String, Team> team : teams.getTeams().entrySet()) {
-			
 			HashMap<String, Item> initItems = new HashMap();
 	        try (BufferedReader br = new BufferedReader(new FileReader("itemList.csv"))) {
 	        	String line;
-	            while ((line = br.readLine().toLowerCase()) != null) {
-	                String[] item = line.split(",");
+	            while ((line = br.readLine()) != null) {
+	                String[] item = line.toLowerCase().split(",");
 					initItems.put(item[0], new Item(item[0], item[1],Integer.parseInt(item[2]), null));
 	            }
 

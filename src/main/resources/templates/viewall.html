@@ -37,7 +37,7 @@
       <div class="swiper-container" th:each="team : ${teams}">
       <h3 th:text="${team.getKey().getName()}"> </h3>
         <!-- Slider main container -->
-          <!-- Additional required wrapper -->
+          <!-- Additional required wrapper --> 
           <div class="swiper-wrapper">
             <!-- Slidesshows -->
             <div class="swiper-slide" th:each="item : ${team.getValue().getItems()}">

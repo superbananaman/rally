@@ -102,7 +102,7 @@ public class AppController {
     	System.out.println("storeAllowed now "+ storeBool);
     }
 
-    @PostMapping(path="/store", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/store")
     @ResponseBody
     public void handleFileUpload(@CookieValue("team") String cookieTeam, @CookieValue("name") String name, @RequestParam("file") MultipartFile file, @RequestHeader("item") String itemName,
             RedirectAttributes redirectAttributes, HttpServletRequest request) throws UnsupportedEncodingException {
