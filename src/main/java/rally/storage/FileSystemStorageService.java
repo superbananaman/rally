@@ -56,6 +56,12 @@ public class FileSystemStorageService implements StorageService {
                 if(file.getContentType().contains("mp4")) {
                 	newSubmission.setImage(false);
                 }
+
+		if(file.getContentType().contains("quick")){
+			
+			newSubmission.setImage(false);
+			
+		}
                 teams.getTeam(team).getItems().getItems().get(item).setFiles(newSubmission);
             }
         }
